@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - CollabNexus Research Hub</title>
+    <meta name="description" content="User Management for CollabNexus Research Hub">
+    <meta name="author" content="CollabNexus">
+    
+    <link rel="stylesheet" href="css/admin-styles.css">
+    <link rel="stylesheet" href="css/admin-styles2.css">
+    <link rel="stylesheet" href="css/proposals1.css">
+    <link rel="stylesheet" href="css/users.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="dashboard.html" class="logo">
+            <i class="fas fa-book-open book-logo"></i>
+            CollabNexus
+        </a>
+        <ul class="nav-links">
+            <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="proposal.html"><i class="fas fa-clipboard-list"></i> Manage Proposals</a></li>
+            <li><a href="userManagement.html" class="active"><i class="fas fa-users"></i> Manage Users</a></li>
+            <li><a href="messages.html"><i class="fas fa-envelope"></i> Messages</a></li>
+        </ul>
+        <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </nav>
+      
+      
+    <main class="admin-proposal">
+        <header class="proposal-header">
+            <h1>Manage Users</h1>
+            <p>Manage researcher and reviewer accounts</p>
+        </header>
+        <section class="search-section">
+            <form class="search-form">
+                <fieldset>
+                    <input type="text" id="search-input" class="styled-input" placeholder="Search users ...">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                </fieldset>
+            </form>
+        </section>
+
+        <section class="user-list-section">
+            <h2>Registered Users</h2>
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Promote</th>
+                        <th>Join Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="users-list">
+                    <!-- Users will be loaded here by JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <section class="container">
+            <section class="footer-content">
+                <article class="footer-column">
+                    <header class="footer-logo">
+                          <i class="fas fa-book-open book-logo"></i>
+                          CollabNexus
+                    </header>
+                    <p>Connecting researchers, advancing science, and accelerating discoveries through collaborative innovation.</p>
+                </article>
+                <article class="footer-column">
+                    <h3>Solutions</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">For Researchers</a></li>
+                        <li><a href="#">For Universities</a></li>
+                        <li><a href="#">For Industry</a></li>
+                        <li><a href="#">For Funding Agencies</a></li>
+                    </ul>
+                </article>
+                <article class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Research Guides</a></li>
+                        <li><a href="#">Webinars</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                    </ul>
+                </article>
+                <article class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </article>
+            </section>
+            <section class="footer-bottom">
+                <p>&copy; 2025 CollabNexus Research Hub. All rights reserved.</p>
+            </section>
+        </section>
+    </footer>
+
+    <script src="js/userManagement.js"></script>
+    <script src="../../js/auth.js"></script>
+</body>
+</html>

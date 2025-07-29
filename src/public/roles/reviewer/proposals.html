@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviewer Dashboard - CollabNexus Research Hub</title>
+    <meta name="description" content="Reviewer dashboard for CollabNexus Research Hub">
+    <meta name="author" content="CollabNexus">
+    
+    <meta property="og:title" content="Reviewer Dashboard - CollabNexus Research Hub">
+    <meta property="og:description" content="Reviewer dashboard for CollabNexus Research Hub">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/reviewer-styles.css">
+    <link rel="stylesheet" href="css/reviewer-proposals.css">
+    <link rel="stylesheet" href="css/reviewer-styles-enhanced.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="dashboard.html" class="logo">
+            <i class="fas fa-book-open book-logo"></i>
+            CollabNexus
+        </a>
+        <ul class="nav-links">
+            <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="proposals.html" class="active"><i class="fas fa-clipboard-list"></i> Assigned Proposals</a></li>
+            <li><a href="messages.html"><i class="fas fa-envelope"></i> Messages</a></li>
+        </ul>
+        <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </nav>
+
+    <main class="reviewer-dashboard">
+        <header class="dashboard-header">
+            <h1>Review Proposals</h1>
+            <p>Review all proposals assigned to you.</p>
+        </header>
+
+        <section class="review-stats">
+            <article class="stat-card">
+                <i class="fas fa-clock stat-icon"></i>
+                <h3>Pending Reviews</h3>
+                <p class="stat-number">0</p>
+                <p class="stat-detail">Needs your evaluation</p>
+            </article>
+            <article class="stat-card">
+                <i class="fas fa-check-circle stat-icon"></i>
+                <h3>Completed Reviews</h3>
+                <p class="stat-number">0</p>
+                <p class="stat-detail">This month</p>
+            </article>
+            <article class="stat-card">
+                <i class="fas fa-calendar-alt stat-icon"></i>
+                <h3>Upcoming Deadlines</h3>
+                <p class="stat-number">0</p>
+                <p class="stat-detail">Due this week</p>
+            </article>
+            <article class="stat-card">
+                <i class="fas fa-star stat-icon"></i>
+                <h3>Your Rating</h3>
+                <p class="stat-number">0</p>
+                <p class="stat-detail">Out of 5</p>
+            </article>
+        </section>
+
+        <section class="proposals-card">
+            <header class="card-header">
+                <h2>Assigned Proposals</h2>
+                <fieldset class="filter-controls">
+                    <select class="styled-select">
+                        <option value="all">All Proposals</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="revision">Needs Revision</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                    <button class="refresh-btn">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </fieldset>
+            </header>
+            <table class="proposals-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Research Area</th>
+                        <th>Submission Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <section class="evaluation-modal">
+        <article class="modal-content">
+            <header class="modal-header">
+                <h2>Proposal Evaluation</h2>
+                <button class="close-modal" aria-label="Close modal">×</button>
+            </header>
+            <section class="modal-body">
+                <h3 id="proposal-title">Loading proposal...</h3>
+                <p class="proposal-meta">By <em id="proposal-author">Loading author...</em> • Submitted <time id="proposal-date">Loading date...</time></p>
+                
+                <form id="evaluation-form">
+                    <fieldset class="form-group">
+                        <legend>Feedback</legend>
+                        <textarea id="feedback" class="styled-input" rows="6" placeholder="Enter your detailed feedback here..." required></textarea>
+                    </fieldset>
+                    
+                    <fieldset class="form-group rating-container">
+                        <legend>Quality Rating</legend>
+                        <p class="rating-stars">
+                            <button type="button" class="rating-star" data-value="1" aria-label="Rate 1 star"><i class="far fa-star"></i></button>
+                            <button type="button" class="rating-star" data-value="2" aria-label="Rate 2 stars"><i class="far fa-star"></i></button>
+                            <button type="button" class="rating-star" data-value="3" aria-label="Rate 3 stars"><i class="far fa-star"></i></button>
+                            <button type="button" class="rating-star" data-value="4" aria-label="Rate 4 stars"><i class="far fa-star"></i></button>
+                            <button type="button" class="rating-star" data-value="5" aria-label="Rate 5 stars"><i class="far fa-star"></i></button>
+                        </p>
+                        <input type="hidden" id="rating-value" name="rating" class="rating-value" required>
+                        <p class="rating-label">Selected: <output id="rating-display" for="rating-value">0/5</output></p>
+                    </fieldset>
+                    
+                    <fieldset class="form-group">
+                        <legend>Recommendation</legend>
+                        <ul class="recommendation-options">
+                            <li>
+                                <input type="radio" id="approve" name="recommendation" value="approve" required>
+                                <label for="approve">Approve</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="revision" name="recommendation" value="revision">
+                                <label for="revision">Request Revision</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="reject" name="recommendation" value="reject">
+                                <label for="reject">Reject</label>
+                            </li>
+                        </ul>
+                    </fieldset>
+                    
+                    <footer class="modal-footer">
+                        <button type="button" class="btn btn-outline cancel-btn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit Evaluation</button>
+                    </footer>
+                </form>
+            </section>
+        </article>
+    </section>
+
+    <footer class="footer">
+        <section class="container">
+            <nav class="footer-content">
+                <article class="footer-column">
+                    <h3 class="footer-logo">
+                        <i class="fas fa-book-open book-logo"></i>
+                        CollabNexus
+                    </h3>
+                    <p>A platform for collaborative research and knowledge sharing.</p>
+                </article>
+                <article class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Reviewer Guidelines</a></li>
+                        <li><a href="#">Best Practices</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </article>
+                <article class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Report Issue</a></li>
+                    </ul>
+                </article>
+                <article class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </article>
+            </nav>
+            <p class="footer-bottom">© 2025 CollabNexus Research Hub. All rights reserved.</p>
+        </section>
+    </footer>
+
+    <script src="js/reviewer-dashboard.js"></script>
+    <script src="../../js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - CollabNexus</title>
+
+    <link rel="stylesheet" href="css/projects1.css">
+    <link rel="stylesheet" href="css/projects2.css">
+    <link rel="stylesheet" href="css/projectStyle.css">
+    <link rel="stylesheet" href="css/milestones3.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/errors.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <a href="dashboard.html" class="logo">
+                <i class="fas fa-book-open book-logo"></i>
+                CollabNexus
+            </a>
+            <ul class="nav-links">
+                <li><a href="dashboard.html"><i class="fas fa-th"></i> My Dashboard</a></li>
+                <li><a href="projects.html" class="active"><i class="fas fa-project-diagram"></i> My Projects</a></li>
+                <li><a href="milestones.html"><i class="fas fa-clipboard-list"></i> Milestones</a></li>
+                <li><a href="invitations.html"><i class="fas fa-users"></i> Invitations</a></li>
+                <li><a href="funding.html"><i class="fas fa-hand-holding-usd"></i> Funding</a></li>
+                <li><a href="aipage.html"><i class="fas fa-robot"></i> AI Suggestions</a></li>
+                <li><a href="messages.html"><i class="fas fa-envelope"></i> Messages</a></li>
+            </ul>
+            <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </nav>
+
+    <main class="admin-proposal">
+        <section class="proposal-header">
+            <section class="page-title-container">
+                <h1 class="page-title">Research Projects</h1>
+                <p class="page-subtitle">Create and manage your research projects, invite collaborators, and track progress.</p>
+            </section>
+          </section>
+          
+        <section class="action-bar">
+            <button id="create-project-btn" class="btn primary"><i class="fas fa-plus"></i> New Project</button>
+            <section class="search-box">
+                <input type="text" id="search-input" placeholder="Search projects...">
+                <button id="search-btn"><i class="fas fa-search"></i></button>
+            </section>
+        </section>
+
+        <section class="projects-container" id="projects-container">
+            <!-- Projects will be loaded here -->
+            <section class="loading">
+                <i class="fas fa-spinner fa-spin"></i> Loading projects...
+            </section>
+        </section>
+
+        <!-- Create/Edit Project Modal -->
+        <section id="project-modal" class="modal">
+            <section class="modal-content">
+                <section class="modal-header">
+                    <h2 id="modal-title">Add New Project</h2>
+                    <nav class="close">&times;</nav>
+                </section>
+                <section class="modal-body">
+                    <form id="project-form">
+                        <input type="hidden" id="project-id">
+                        
+                        <h3>Project Details</h3>
+                        <section class="form-group">
+                            <label for="researcher-name">Researcher Name</label>
+                            <input type="text" id="researcher-name" required>
+                        </section>
+                        
+                        <section class="form-group">
+                            <label for="project-title">Project Title</label>
+                            <input type="text" id="project-title" required>
+                        </section>
+                        
+                        <section class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" rows="3" required></textarea>
+                        </section>
+                        
+                        <section class="form-group">
+                            <label for="key-research-area">Key Research Areas</label>
+                            <input type="text" id="key-research-area" placeholder="Separate by commas" required>
+                        </section>
+                        
+                        <section class="form-row">
+                            <section class="form-group">
+                                <label for="start-date">Start Date</label>
+                                <input type="date" id="start-date" required>
+                            </section>
+                            
+                            <section class="form-group">
+                                <label for="end-date">End Date</label>
+                                <input type="date" id="end-date" required>
+                            </section>
+                        </section>
+                        
+                        <section class="form-group checkbox">
+                            <input type="checkbox" id="funding-available">
+                            <label for="funding-available">Funding Available</label>
+                        </section>
+                        
+                        <h3>Collaboration Requirements</h3>
+                        <section class="form-group">
+                            <label for="skills">Skills & Expertise Required</label>
+                            <input type="text" id="skills" placeholder="Separate by commas" required>
+                        </section>
+                        
+                        <section class="form-group">
+                            <label for="experience-level">Experience Level</label>
+                            <select id="experience-level" required>
+                                <option value="Entry">Entry Level</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Expert">Expert</option>
+                            </select>
+                        </section>
+                        
+                        <section class="form-group">
+                            <label for="positions">Positions Required</label>
+                            <input type="text" id="positions" placeholder="Separate by commas" required>
+                        </section>
+                        
+                        <section class="form-group">
+                            <label for="technical-requirements">Technical Requirements</label>
+                            <input type="text" id="technical-requirements" placeholder="Separate by commas" required>
+                        </section>
+                        
+                        <section class="form-actions">
+                            <button type="submit" class="btn primary">Save Project</button>
+                            <button type="button" class="btn secondary" id="cancel-btn">Cancel</button>
+                        </section>
+                    </form>
+                </section>
+            </section>
+        </section>
+
+        <!-- Invite Collaborators Modal -->
+        <section id="invite-modal" class="modal">
+            <section class="modal-content invite-modal-content">
+                <section class="modal-header">
+                    <h2>Invite Collaborators</h2>
+                    <nav class="close">&times;</nav>
+                </section>
+                <section class="modal-body">
+                    <section class="invite-project-info">
+                        <h3>Project: <nav id="invite-project-title"></nav></h3>
+                        <input type="hidden" id="invite-project-id">
+                    </section>
+                    
+                    <section class="tabs">
+                        <button class="tab-btn active" data-tab="available-collaborators">Available Collaborators</button>
+                        <button class="tab-btn" data-tab="manual-invite">Manual Invite</button>
+                    </section>
+                    
+                    <section class="tab-content" id="available-collaborators">
+                        <section class="search-collaborators">
+                            <input type="text" id="collaborator-search" placeholder="Search collaborators...">
+                            <button id="search-collaborator-btn"><i class="fas fa-search"></i></button>
+                        </section>
+                        
+                        <section class="collaborators-list" id="collaborators-list">
+                            <section class="loading">
+                                <i class="fas fa-spinner fa-spin"></i> Loading collaborators...
+                            </section>
+                        </section>
+                    </section>
+                    
+                    <section class="tab-content hidden" id="manual-invite">
+                        <form id="invite-form">
+                            <section class="form-group">
+                                <label for="collaborator-email">Collaborator Email</label>
+                                <input type="email" id="collaborator-email" required placeholder="email@example.com">
+                            </section>
+                            
+                            <section class="form-group">
+                                <label for="collaborator-position">Position</label>
+                                <select id="collaborator-position" required>
+                                    <!-- Will be populated dynamically -->
+                                </select>
+                            </section>
+                            
+                            <section class="form-group">
+                                <label for="collaboration-message">Invitation Message</label>
+                                <textarea id="collaboration-message" rows="5" required></textarea>
+                            </section>
+                            
+                            <section class="form-actions">
+                                <button type="submit" class="btn primary">Send Invitation</button>
+                                <button type="button" class="btn secondary" id="cancel-invite-btn">Cancel</button>
+                            </section>
+                        </form>
+                    </section>
+                </section>
+            </section>
+        </section>
+        
+        <!-- Collaborator Profile Modal -->
+        <section id="profile-modal" class="modal">
+            <section class="modal-content profile-modal-content">
+                <section class="modal-header">
+                    <h2>Collaborator Profile</h2>
+                    <nav class="close">&times;</nav>
+                </section>
+                <section class="modal-body" id="collaborator-profile">
+                    <!-- Collaborator profile will be loaded here -->
+                    <section class="loading">
+                        <i class="fas fa-spinner fa-spin"></i> Loading profile...
+                    </section>
+                </section>
+                <section class="modal-footer">
+                    <button class="btn primary" id="invite-from-profile-btn">
+                        <i class="fas fa-user-plus"></i> Invite to Project
+                    </button>
+                    <button class="btn secondary" id="close-profile-btn">Close</button>
+                </section>
+            </section>
+        </section>
+
+        <!-- Delete Confirmation Modal -->
+        <section id="delete-modal" class="modal">
+            <section class="modal-content delete-modal">
+                <section class="modal-header">
+                    <h2>Confirm Deletion</h2>
+                    <nav class="close">&times;</nav>
+                </section>
+                <section class="modal-body">
+                    <p>Are you sure you want to delete this project? This action cannot be undone.</p>
+                    <section class="project-to-delete"></section>
+                    <section class="form-actions">
+                        <button type="button" class="btn danger" id="confirm-delete-btn">Delete Project</button>
+                        <button type="button" class="btn secondary" id="cancel-delete-btn">Cancel</button>
+                    </section>
+                </section>
+            </section>
+        </section>
+        <!-- Project Details Modal -->
+<section id="details-modal" class="modal">
+    <section class="modal-content details-modal-content">
+        <section class="modal-header">
+            <h2 id="details-project-title">Project Details</h2>
+            <nav class="close">&times;</nav>
+        </section>
+        <section class="modal-body" id="details-container">
+            <!-- Project details will be loaded here -->
+            <section class="loading">
+                <i class="fas fa-spinner fa-spin"></i> Loading project details...
+            </section>
+        </section>
+        <section class="modal-footer">
+            <button type="button" class="btn primary" id="edit-from-details-btn">
+                <i class="fas fa-edit"></i> Edit Project
+            </button>
+            <button type="button" class="btn secondary" id="close-details-btn">Close</button>
+        </section>
+    </section>
+</section>
+    </main>
+<!-- Footer -->
+<footer class="footer">
+  <section class="container">
+    <section class="footer-content">
+      <article class="footer-column">
+        <header class="footer-logo">
+          <i class="fas fa-book-open book-logo"></i>
+          CollabNexus
+        </header>
+        <p>Connecting researchers, advancing science, and accelerating discoveries through collaborative innovation.</p>
+      </article>
+      <article class="footer-column">
+        <h3>Solutions</h3>
+        <nav>
+          <ul class="footer-links">
+            <li><a href="#">For Researchers</a></li>
+            <li><a href="#">For Universities</a></li>
+            <li><a href="#">For Industry</a></li>
+            <li><a href="#">For Funding Agencies</a></li>
+          </ul>
+        </nav>
+      </article>
+      <article class="footer-column">
+        <h3>Resources</h3>
+        <nav>
+          <ul class="footer-links">
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Research Guides</a></li>
+            <li><a href="#">Webinars</a></li>
+            <li><a href="#">Case Studies</a></li>
+          </ul>
+        </nav>
+      </article>
+      <article class="footer-column">
+        <h3>Company</h3>
+        <nav>
+          <ul class="footer-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </nav>
+      </article>
+    </section>
+    <section class="footer-bottom">
+      <small>&copy; 2025 CollabNexus Research Hub. All rights reserved.</small>
+    </section>
+  </section>
+</footer>
+
+    <script src="js/projects.js"></script>
+    <script src="../../js/auth.js"></script>
+</body>
+</html>

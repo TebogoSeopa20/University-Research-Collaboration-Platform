@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Suggestions - CollabNexus</title>
+    <link rel="stylesheet" href="css/milestones3.css">
+    <link rel="stylesheet" href="css/aipage.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/errors.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <a href="dashboard.html" class="logo">
+                <i class="fas fa-book-open book-logo"></i>
+                CollabNexus
+            </a>
+            <ul class="nav-links">
+                <li><a href="dashboard.html"><i class="fas fa-th"></i> My Dashboard</a></li>
+                <li><a href="projects.html" ><i class="fas fa-project-diagram"></i> My Projects</a></li>
+                <li><a href="milestones.html"><i class="fas fa-clipboard-list"></i> Milestones</a></li>
+                <li><a href="invitations.html"><i class="fas fa-users"></i> Invitations</a></li>
+                <li><a href="funding.html" ><i class="fas fa-hand-holding-usd"></i> Funding</a></li>
+                <li><a href="aipage.html" class="active"><i class="fas fa-robot"></i> AI Suggestions</a></li>
+                <li><a href="messages.html"><i class="fas fa-envelope"></i> Messages</a></li>
+            </ul>
+            <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </nav>
+
+    <!-- Main Content -->
+    <main class="admin-proposal">
+        <section  class="proposal-header">
+            <section class="page-title-container">
+                <h1 class="page-title">AI Collaboration Suggestions</h1>
+                <p class="page-subtitle">Discover new opportunities personalized for your research profile.</p>
+            </section>
+            <section class="ai-actions">
+                <button id="refresh-suggestions-btn" class="btn btn-secondary">
+                    <i class="fas fa-sync-alt"></i> Refresh Suggestions
+                </button>
+                <button id="ai-settings-btn" class="btn btn-primary">
+                    <i class="fas fa-cog"></i> AI Settings
+                </button>
+            </section>
+        </section>
+
+        <section class="ai-content">
+            <section class="ai-sidebar">
+                <section class="ai-filters">
+                    <h3>Filter Suggestions</h3>
+                    <section class="filter-group">
+                        <label>Category</label>
+                        <section class="filter-options">
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="category" value="collaboration" checked> Collaborations
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="category" value="funding" checked> Funding
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="category" value="resources" checked> Resources
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="category" value="events" checked> Events
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="category" value="papers" checked> Papers
+                            </label>
+                        </section>
+                    </section>
+                    <section class="filter-group">
+                        <label>Priority</label>
+                        <section class="filter-options">
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="priority" value="high" checked> High
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="priority" value="medium" checked> Medium
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="priority" value="low" checked> Low
+                            </label>
+                        </section>
+                    </section>
+                    <section class="filter-group">
+                        <label>Time Horizon</label>
+                        <section class="filter-options">
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="timeframe" value="immediate" checked> Immediate
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="timeframe" value="short-term" checked> Short-term
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="timeframe" value="long-term" checked> Long-term
+                            </label>
+                        </section>
+                    </section>
+                </section>
+                <section class="ai-stats">
+                    <h3>AI Insights</h3>
+                    <section class="stat-item">
+                        <section class="stat-label">Research Alignment</section>
+                        <section class="progress-bar">
+                            <section class="progress-value" style="width: 85%;"></section>
+                        </section>
+                        <section class="stat-value">85%</section>
+                    </section>
+                    <section class="stat-item">
+                        <section class="stat-label">Collaboration Potential</section>
+                        <section class="progress-bar">
+                            <section class="progress-value" style="width: 72%;"></section>
+                        </section>
+                        <section class="stat-value">72%</section>
+                    </section>
+                    <section class="stat-item">
+                        <section class="stat-label">Funding Match Score</section>
+                        <section class="progress-bar">
+                            <section class="progress-value" style="width: 63%;"></section>
+                        </section>
+                        <section class="stat-value">63%</section>
+                    </section>
+                </section>
+            </section>
+            
+            <section class="ai-main">
+                <section class="ai-search-bar">
+                    <section class="search-input">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="suggestion-search" placeholder="Search suggestions...">
+                    </section>
+                    <section class="search-sorting">
+                        <label for="suggestion-sort">Sort by:</label>
+                        <select id="suggestion-sort">
+                            <option value="relevance">Relevance</option>
+                            <option value="recent">Most Recent</option>
+                            <option value="priority">Priority</option>
+                        </select>
+                    </section>
+                </section>
+                
+                <section id="suggestions-container" class="suggestions-container">
+                    <section class="loading-container">
+                        <section class="ai-loading">
+                            <section class="ai-loading-animation">
+                                <i class="fas fa-robot"></i>
+                                <section class="thinking-dots">
+                                    <nav></nav>
+                                    <nav></nav>
+                                    <nav></nav>
+                                </section>
+                            </section>
+                            <p>Analyzing your research profile and generating personalized suggestions...</p>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </main>
+
+    <!-- AI Settings Modal -->
+    <section id="ai-settings-modal" class="modal">
+        <section class="modal-content">
+            <section class="modal-header">
+                <h3>AI Suggestion Settings</h3>
+                <button class="close">&times;</button>
+            </section>
+            <section class="modal-body">
+                <section class="settings-section">
+                    <h4>Suggestion Types</h4>
+                    <section class="settings-options">
+                        <label class="settings-switch">
+                            <input type="checkbox" name="suggestion-type" value="collaboration" checked>
+                            <nav class="switch-slider"></nav>
+                            <nav class="switch-label">Collaborations</nav>
+                        </label>
+                        <label class="settings-switch">
+                            <input type="checkbox" name="suggestion-type" value="funding" checked>
+                            <nav class="switch-slider"></nav>
+                            <nav class="switch-label">Funding Opportunities</nav>
+                        </label>
+                        <label class="settings-switch">
+                            <input type="checkbox" name="suggestion-type" value="papers" checked>
+                            <nav class="switch-slider"></nav>
+                            <nav class="switch-label">Research Papers</nav>
+                        </label>
+                        <label class="settings-switch">
+                            <input type="checkbox" name="suggestion-type" value="events" checked>
+                            <nav class="switch-slider"></nav>
+                            <nav class="switch-label">Conferences & Events</nav>
+                        </label>
+                        <label class="settings-switch">
+                            <input type="checkbox" name="suggestion-type" value="resources" checked>
+                            <nav class="switch-slider"></nav>
+                            <nav class="switch-label">Resources & Tools</nav>
+                        </label>
+                    </section>
+                </section>
+                
+                <section class="settings-section">
+                    <h4>Research Areas of Interest</h4>
+                    <section class="tag-input-container">
+                        <section class="tag-input-field">
+                            <input type="text" id="research-area-input" placeholder="Add a research area...">
+                            <button id="add-research-area-btn"><i class="fas fa-plus"></i></button>
+                        </section>
+                        <section id="research-areas-tags" class="tags-container">
+                            <nav class="tag">Artificial Intelligence<button class="remove-tag">&times;</button></nav>
+                            <nav class="tag">Machine Learning<button class="remove-tag">&times;</button></nav>
+                            <nav class="tag">Quantum Computing<button class="remove-tag">&times;</button></nav>
+                            <nav class="tag">Data Science<button class="remove-tag">&times;</button></nav>
+                        </section>
+                    </section>
+                </section>
+                
+                <section class="settings-section">
+                    <h4>AI Model Preferences</h4>
+                    <section class="settings-options">
+                        <section class="settings-slider">
+                            <label>Creativity <nav id="creativity-value">Medium</nav></label>
+                            <input type="range" id="creativity-slider" min="1" max="3" value="2">
+                            <section class="slider-labels">
+                                <nav>Conservative</nav>
+                                <nav>Balanced</nav>
+                                <nav>Exploratory</nav>
+                            </section>
+                        </section>
+                        
+                        <section class="settings-slider">
+                            <label>Suggestion Frequency <nav id="frequency-value">Weekly</nav></label>
+                            <input type="range" id="frequency-slider" min="1" max="3" value="2">
+                            <section class="slider-labels">
+                                <nav>Monthly</nav>
+                                <nav>Weekly</nav>
+                                <nav>Daily</nav>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="modal-footer">
+                <button id="reset-settings-btn" class="btn btn-secondary">Reset to Default</button>
+                <button id="save-settings-btn" class="btn btn-primary">Save Settings</button>
+            </section>
+        </section>
+    </section>
+
+    <!-- Suggestion Detail Modal -->
+    <section id="suggestion-detail-modal" class="modal">
+        <section class="modal-content modal-lg">
+            <section class="modal-header">
+                <h3 id="detail-title">Suggestion Details</h3>
+                <button class="close">&times;</button>
+            </section>
+            <section class="modal-body">
+                <section id="suggestion-detail-content">
+                    <!-- Content will be dynamically populated -->
+                </section>
+            </section>
+            <section class="modal-footer">
+                <section class="feedback-buttons">
+                    <button id="reject-suggestion-btn" class="btn btn-text">
+                        <i class="fas fa-thumbs-down"></i> Not Relevant
+                    </button>
+                    <button id="save-for-later-btn" class="btn btn-secondary">
+                        <i class="fas fa-bookmark"></i> Save for Later
+                    </button>
+                    <button id="take-action-btn" class="btn btn-primary">
+                        <i class="fas fa-check"></i> Take Action
+                    </button>
+                </section>
+            </section>
+        </section>
+    </section>
+
+    <!-- Toast Notification Container -->
+    <section id="toast-container" class="toast-container"></section>
+
+<!-- Footer -->
+<footer class="footer">
+    <section class="container">
+      <section class="footer-content">
+        <article class="footer-column">
+          <header class="footer-logo">
+            <i class="fas fa-book-open book-logo"></i>
+            CollabNexus
+          </header>
+          <p>Connecting researchers, advancing science, and accelerating discoveries through collaborative innovation.</p>
+        </article>
+        <article class="footer-column">
+          <h3>Solutions</h3>
+          <nav>
+            <ul class="footer-links">
+              <li><a href="#">For Researchers</a></li>
+              <li><a href="#">For Universities</a></li>
+              <li><a href="#">For Industry</a></li>
+              <li><a href="#">For Funding Agencies</a></li>
+            </ul>
+          </nav>
+        </article>
+        <article class="footer-column">
+          <h3>Resources</h3>
+          <nav>
+            <ul class="footer-links">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Research Guides</a></li>
+              <li><a href="#">Webinars</a></li>
+              <li><a href="#">Case Studies</a></li>
+            </ul>
+          </nav>
+        </article>
+        <article class="footer-column">
+          <h3>Company</h3>
+          <nav>
+            <ul class="footer-links">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </nav>
+        </article>
+      </section>
+      <section class="footer-bottom">
+        <small>&copy; 2025 CollabNexus Research Hub. All rights reserved.</small>
+      </section>
+    </section>
+  </footer>
+  
+
+    <script src="js/aipage.js"></script>
+    <script src="../../js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviewer Dashboard - CollabNexus Research Hub</title>
+    <meta name="description" content="Advanced dashboard for CollabNexus Research Hub reviewers">
+    <meta name="author" content="CollabNexus">
+    
+    <meta property="og:title" content="Reviewer Dashboard - CollabNexus Research Hub">
+    <meta property="og:description" content="Advanced dashboard for CollabNexus Research Hub reviewers">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/reviewer-styles.css">
+    <link rel="stylesheet" href="css/reviewer-proposals.css">
+    <link rel="stylesheet" href="css/reviewer-styles-enhanced.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="dashboard.html" class="logo">
+            <i class="fas fa-book-open book-logo"></i>
+            CollabNexus
+        </a>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="proposals.html"><i class="fas fa-clipboard-list"></i> Assigned Proposals</a></li>
+            <li><a href="messages.html"><i class="fas fa-envelope"></i> Messages</a></li>
+        </ul>
+        <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </nav>
+
+    <main class="reviewer-dashboard">
+        <header class="dashboard-welcome">
+            <section class="welcome-content">
+                <h1>Welcome Back Reviewer, <span id="reviewer-name">Reviewer</span></h1>
+                <p class="subtitle">Your review dashboard overview</p>
+                <time class="date-display" datetime="2025-05-23">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span id="current-date">Loading date...</span>
+                </time>
+            </section>
+        </header>
+
+        <section class="dashboard-overview" aria-label="Dashboard Overview Statistics">
+            <article class="overview-card total-assigned">
+                <figure class="card-icon" aria-hidden="true">
+                    <i class="fas fa-clipboard-list"></i>
+                </figure>
+                <section class="card-content">
+                    <h2 id="total-assigned">0</h2>
+                    <p>Total Assigned</p>
+                </section>
+                <aside class="card-trend up">
+                    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+                    <span>5%</span>
+                </aside>
+            </article>
+            <article class="overview-card pending-reviews">
+                <figure class="card-icon" aria-hidden="true">
+                    <i class="fas fa-clock"></i>
+                </figure>
+                <section class="card-content">
+                    <h2 id="pending-reviews">0</h2>
+                    <p>Pending Reviews</p>
+                </section>
+                <aside class="card-trend down">
+                    <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                    <span>3%</span>
+                </aside>
+            </article>
+            <article class="overview-card completed-reviews">
+                <figure class="card-icon" aria-hidden="true">
+                    <i class="fas fa-check-circle"></i>
+                </figure>
+                <section class="card-content">
+                    <h2 id="completed-reviews">0</h2>
+                    <p>Completed Reviews</p>
+                </section>
+                <aside class="card-trend up">
+                    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+                    <span>12%</span>
+                </aside>
+            </article>
+            <article class="overview-card avg-time">
+                <figure class="card-icon" aria-hidden="true">
+                    <i class="fas fa-hourglass-half"></i>
+                </figure>
+                <section class="card-content">
+                    <h2 id="avg-time">0 days</h2>
+                    <p>Avg. Review Time</p>
+                </section>
+                <aside class="card-trend neutral">
+                    <i class="fas fa-minus" aria-hidden="true"></i>
+                    <span>No change</span>
+                </aside>
+            </article>
+        </section>
+
+        <section class="dashboard-charts-container" aria-label="Dashboard Charts">
+            <article class="chart-container reviews-trend">
+                <header class="chart-header">
+                    <h2 class="chart-title">Reviews Completed</h2>
+                    <p class="chart-subtitle">Monthly completion trend</p>
+                </header>
+                <nav class="chart-toolbar">
+                    <fieldset class="chart-timeframe">
+                        <legend class="sr-only">Chart time period</legend>
+                        <button class="timeframe-btn active" data-period="week">Week</button>
+                        <button class="timeframe-btn" data-period="month">Month</button>
+                        <button class="timeframe-btn" data-period="year">Year</button>
+                    </fieldset>
+                    <button class="chart-download" aria-label="Download chart">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </nav>
+                <figure class="chart-wrapper">
+                    <canvas id="reviewsCompletedChart" aria-label="Reviews completed chart"></canvas>
+                </figure>
+            </article>
+
+            <article class="chart-container review-types">
+                <header class="chart-header">
+                    <h2 class="chart-title">Review Decisions</h2>
+                    <p class="chart-subtitle">Distribution of your recommendations</p>
+                </header>
+                <figure class="chart-wrapper">
+                    <canvas id="reviewDecisionsChart" aria-label="Review decisions distribution chart"></canvas>
+                </figure>
+                <dl class="chart-legend">
+                    <dt class="legend-item">
+                        <span class="legend-color approved" aria-hidden="true"></span>
+                        <span class="legend-label">Approved</span>
+                    </dt>
+                    <dt class="legend-item">
+                        <span class="legend-color revision" aria-hidden="true"></span>
+                        <span class="legend-label">Revisions</span>
+                    </dt>
+                    <dt class="legend-item">
+                        <span class="legend-color rejected" aria-hidden="true"></span>
+                        <span class="legend-label">Rejected</span>
+                    </dt>
+                </dl>
+            </article>
+        </section>
+
+        <section class="dashboard-schedule" aria-label="Review Schedule">
+            <article class="schedule-calendar">
+                <header class="calendar-header">
+                    <h2>Review Schedule</h2>
+                    <nav class="calendar-controls">
+                        <button class="calendar-nav prev" aria-label="Previous month">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 id="calendar-month">May 2025</h3>
+                        <button class="calendar-nav next" aria-label="Next month">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </nav>
+                </header>
+                <section id="calendar-widget" class="calendar-widget" role="grid" aria-label="Calendar"></section>
+            </article>
+            <aside class="upcoming-deadlines">
+                <header class="deadlines-header">
+                    <h2>Upcoming Deadlines</h2>
+                    <button class="btn btn-sm btn-outline">View All</button>
+                </header>
+                <ul class="deadlines-list" id="deadlines-list">
+                    <!-- Dynamically populated -->
+                </ul>
+            </aside>
+        </section>
+
+        <section class="dashboard-recent-activity" aria-label="Recent Activity">
+            <header class="recent-activity-header">
+                <h2>Recent Activity</h2>
+                <a href="#" class="view-all">View All</a>
+            </header>
+            <ol class="activity-timeline">
+                <li class="timeline-item">
+                    <figure class="timeline-icon completed" aria-hidden="true">
+                        <i class="fas fa-check"></i>
+                    </figure>
+                    <article class="timeline-content">
+                        <h4>Completed Review: Sustainable Agriculture Study</h4>
+                        <p>You approved this proposal with a rating of 4.5/5</p>
+                        <time class="timeline-date" datetime="2025-05-23T14:00:00">2 hours ago</time>
+                    </article>
+                </li>
+                <li class="timeline-item">
+                    <figure class="timeline-icon comment" aria-hidden="true">
+                        <i class="fas fa-comment"></i>
+                    </figure>
+                    <article class="timeline-content">
+                        <h4>Comment on Climate Change Report</h4>
+                        <p>You left feedback requesting additional data sources</p>
+                        <time class="timeline-date" datetime="2025-05-22">Yesterday</time>
+                    </article>
+                </li>
+                <li class="timeline-item">
+                    <figure class="timeline-icon revision" aria-hidden="true">
+                        <i class="fas fa-edit"></i>
+                    </figure>
+                    <article class="timeline-content">
+                        <h4>Requested Revision: Biomedical Engineering Proposal</h4>
+                        <p>You requested revisions focusing on methodology section</p>
+                        <time class="timeline-date" datetime="2025-05-21">2 days ago</time>
+                    </article>
+                </li>
+                <li class="timeline-item">
+                    <figure class="timeline-icon assigned" aria-hidden="true">
+                        <i class="fas fa-clipboard-list"></i>
+                    </figure>
+                    <article class="timeline-content">
+                        <h4>New Proposal Assigned: Quantum Computing Applications</h4>
+                        <p>Due for review by May 15, 2025</p>
+                        <time class="timeline-date" datetime="2025-05-20">3 days ago</time>
+                    </article>
+                </li>
+            </ol>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <section class="container">
+            <nav class="footer-content">
+                <article class="footer-column">
+                    <h3 class="footer-logo">
+                        <i class="fas fa-book-open book-logo"></i>
+                        CollabNexus
+                    </h3>
+                    <p>A platform for collaborative research and knowledge sharing.</p>
+                </article>
+                <article class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Reviewer Guidelines</a></li>
+                        <li><a href="#">Best Practices</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </article>
+                <article class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Report Issue</a></li>
+                    </ul>
+                </article>
+                <article class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </article>
+            </nav>
+            <p class="footer-bottom">© 2025 CollabNexus Research Hub. All rights reserved.</p>
+        </section>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="../../js/auth.js"></script>
+</body>
+</html>

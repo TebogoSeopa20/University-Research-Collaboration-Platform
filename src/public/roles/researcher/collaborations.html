@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collaborators - CollabNexus</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/researcher.css">
+  <link rel="stylesheet" href="css/collaborations.css">
+  <link rel="stylesheet" href="css/researcher-platform.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <section class="max-w-7xl mx-auto px-4">
+        <section class="flex justify-between h-20">
+          <section class="flex items-center">
+            <a href="dashboard.html" class="flex-shrink-0 flex items-center">
+              <i class="fas fa-book-open book-logo"></i>
+              <strong class="font-playfair text-xl font-bold text-research-dark">
+                CollabNexus
+              </strong>
+            </a>
+            <menu class="hidden sm:ml-10 sm:flex sm:space-x-8">
+              <li><a href="/researcher" class="border-transparent text-gray-500 hover:border-research-accent hover:text-research-accent inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                Dashboard
+              </a></li>
+              <li><a href="/projects" class="border-transparent text-gray-500 hover:border-research-accent hover:text-research-accent inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                Projects
+              </a></li>
+              <li><a href="/collaborations" class="border-research-primary text-research-primary hover:border-research-accent hover:text-research-accent inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                Collaborators
+              </a></li>
+              <li><a href="/invitations" class="border-transparent text-gray-500 hover:border-research-accent hover:text-research-accent inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                Invitations
+              </a></li>
+              <li><a href="messaging.html" class="border-transparent text-gray-500 hover:border-research-accent hover:text-research-accent inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                Messages
+              </a></li>
+            </menu>
+          </section>
+          <section class="hidden md:flex items-center space-x-4">
+            <button id="logout-btn" class="text-research-accent border-research-accent hover:bg-research-light hover:text-research-accent px-4 py-2 rounded border">
+              Logout
+            </button>
+          </section>
+          <section class="flex items-center md:hidden">
+            <button id="mobile-menu-button" class="text-gray-500 hover:text-research-accent">
+              <i class="fas fa-bars"></i>
+            </button>
+          </section>
+        </section>
+      </section>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <section class="page-header">
+      <header class="page-title-container">
+        <h1 class="page-title">Research Collaborators</h1>
+        <p class="page-subtitle">Find and connect with researchers who share your academic interests.</p>
+      </header>
+    </section>
+    
+    <section class="search-container">
+      <form class="search-box">
+        <input type="text" id="collaborator-search" class="search-input" placeholder="Search by name, research area, or expertise">
+        <button id="search-button" class="search-button">
+          <i class="fas fa-search"></i> Search
+        </button>
+      </form>
+      <nav class="filter-options">
+        <menu class="filter-menu">
+          <li class="filter-option active" data-filter="all">All Researchers</li>
+          <li class="filter-option" data-filter="collaborators">My Collaborators</li>
+          <li class="filter-option" data-filter="recommended">Recommended</li>
+          <li class="filter-option" data-filter="same-field">Same Field</li>
+          <li class="filter-option" data-filter="same-institution">Same Institution</li>
+        </menu>
+      </nav>
+    </section>
+    
+    <section id="collaborators-grid" class="collaborators-grid">
+      <!-- Collaborators will be populated by JavaScript -->
+    </section>
+    
+    <!-- Collaborator Profile Modal -->
+    <dialog id="profile-modal" class="modal-overlay">
+      <article class="modal">
+        <header class="modal-header">
+          <h2 class="modal-title">Researcher Profile</h2>
+          <button class="modal-close" id="close-profile-modal">&times;</button>
+        </header>
+        <section class="modal-body" id="profile-content">
+          <!-- Profile content will be populated by JavaScript -->
+        </section>
+        <footer class="modal-footer">
+          <button id="close-profile" class="btn btn-outline">Close</button>
+          <button id="message-researcher" class="btn btn-primary">
+            <i class="fas fa-envelope mr-2"></i> Send Message
+          </button>
+          <button id="invite-to-project" class="btn btn-primary">
+            <i class="fas fa-user-plus mr-2"></i> Invite to Project
+          </button>
+        </footer>
+      </article>
+    </dialog>
+    
+    <!-- Invite to Project Modal -->
+    <dialog id="invite-project-modal" class="modal-overlay">
+      <article class="modal">
+        <header class="modal-header">
+          <h2 class="modal-title">Invite to Project</h2>
+          <button class="modal-close" id="close-invite-project-modal">&times;</button>
+        </header>
+        <section class="modal-body">
+          <article id="invite-researcher-info" class="mb-4">
+            <!-- Researcher info will be populated by JavaScript -->
+          </article>
+          <fieldset class="form-group">
+            <label for="invite-project-select">Select Project</label>
+            <select id="invite-project-select" class="form-control">
+              <!-- Projects will be populated by JavaScript -->
+            </select>
+          </fieldset>
+          <fieldset class="form-group">
+            <label for="project-invite-message">Invitation Message</label>
+            <textarea id="project-invite-message" class="form-control" placeholder="Write a personal message to invite the researcher..."></textarea>
+          </fieldset>
+        </section>
+        <footer class="modal-footer">
+          <button id="cancel-project-invite" class="btn btn-outline">Cancel</button>
+          <button id="send-project-invite" class="btn btn-primary">Send Invitation</button>
+        </footer>
+      </article>
+    </dialog>
+    
+    <!-- Toast Notifications -->
+    <aside class="toast-container">
+      <!-- Toasts will be populated by JavaScript -->
+    </aside>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <section class="container">
+      <section class="footer-content">
+        <article class="footer-column">
+          <header class="footer-logo">
+            <i class="fas fa-book-open book-logo"></i>
+            CollabNexus
+          </header>
+          <p>Connecting researchers, advancing science, and accelerating discoveries through collaborative innovation.</p>
+        </article>
+        <article class="footer-column">
+          <h3>Solutions</h3>
+          <nav>
+            <ul class="footer-links">
+              <li><a href="#">For Researchers</a></li>
+              <li><a href="#">For Universities</a></li>
+              <li><a href="#">For Industry</a></li>
+              <li><a href="#">For Funding Agencies</a></li>
+            </ul>
+          </nav>
+        </article>
+        <article class="footer-column">
+          <h3>Resources</h3>
+          <nav>
+            <ul class="footer-links">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Research Guides</a></li>
+              <li><a href="#">Webinars</a></li>
+              <li><a href="#">Case Studies</a></li>
+            </ul>
+          </nav>
+        </article>
+        <article class="footer-column">
+          <h3>Company</h3>
+          <nav>
+            <ul class="footer-links">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </nav>
+        </article>
+      </section>
+      <section class="footer-bottom">
+        <small>&copy; 2025 CollabNexus Research Hub. All rights reserved.</small>
+      </section>
+    </section>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="../../js/auth.js"></script>
+  <script src="/js/messaging.js"></script>
+  <script src="js/collaborations.js"></script>
+</body>
+</html>
